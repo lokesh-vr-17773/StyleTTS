@@ -474,7 +474,18 @@ def main(config_path):
             }
             save_path = osp.join(log_dir, 'epoch_2nd_%05d.pth' % epoch)
             torch.save(state, save_path)
+
+    print('Saving..')
+    state = {
+        'net':  {key: model[key].state_dict() for key in model}, 
+        'optimizer': optimizer.state_dict(),
+        'iters': iters,
+        'val_loss': loss_test / iters_test,
+        'epoch': epoch,
+    }
+    save_path = osp.join(log_dir, 'second_stage.pth')
+    torch.save(state, save_path)
+
         
-            
 if __name__=="__main__":
     main()

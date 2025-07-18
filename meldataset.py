@@ -79,7 +79,7 @@ class FilePathDataset(torch.utils.data.Dataset):
         mel_params = MEL_PARAMS
 
         _data_list = [l[:-1].split('|') for l in data_list]
-        self.data_list = [data if len(data) == 3 else (*data, 0) for data in _data_list]
+        self.data_list = [data if len(data) == 3 else (*data, 0) for data in _data_list][:50]
         self.text_cleaner = TextCleaner()
         self.sr = sr
 
@@ -116,7 +116,7 @@ class FilePathDataset(torch.utils.data.Dataset):
             wave = wave[:, 0].squeeze()
         if sr != 24000:
             wave = librosa.resample(wave, orig_sr=sr, target_sr=24000)
-            print(wave_path, sr)
+            # print(wave_path, sr)
             
         wave = np.concatenate([np.zeros([5000]), wave, np.zeros([5000])], axis=0)
         
